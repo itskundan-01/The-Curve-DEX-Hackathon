@@ -30,6 +30,9 @@ See `docs/` to start.
 - docs/11_RISKS_AND_MITIGATIONS.md
 - docs/12_GOCODE_ENVIRONMENT_NOTES.md
 - docs/13_STARTER_CODE_INTEGRATION.md
+- docs/14_COMPLEXITY_ASSESSMENT.md
+- docs/15_LOCAL_DEVELOPMENT_STRATEGY.md
+- docs/16_PRE_CHALLENGE_DEV_PLAN.md
 
 ## Next step
 When you confirm, we’ll generate the C++ project, wire dependencies, implement the modules per this plan, and run smoke tests.
