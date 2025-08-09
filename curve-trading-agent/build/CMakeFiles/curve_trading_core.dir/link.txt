@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcurve_trading_core.a CMakeFiles/curve_trading_core.dir/src/core/Order.cpp.o CMakeFiles/curve_trading_core.dir/src/core/OrderPolicies.cpp.o CMakeFiles/curve_trading_core.dir/src/utils/PriceUtils.cpp.o
+/usr/bin/ranlib libcurve_trading_core.a

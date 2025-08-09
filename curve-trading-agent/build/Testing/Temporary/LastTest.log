@@ -1,0 +1,75 @@
+Start testing: Aug 08 16:49 IST
+----------------------------------------------------------
+1/3 Testing: order_tests
+1/3 Test: order_tests
+Command: "/Users/kundan/PROJECTS/The Curve DEX Hackathon/curve-trading-agent/build/test_order"
+Directory: /Users/kundan/PROJECTS/The Curve DEX Hackathon/curve-trading-agent/build
+"order_tests" start time: Aug 08 16:49 IST
+Output:
+----------------------------------------------------------
+Running Order tests...
+Testing order creation...
+✓ Order creation test passed
+Testing order validation...
+✓ Order validation test passed
+Testing order status transitions...
+✓ Order status transition test passed
+Testing order serialization...
+Assertion failed: (json.find("\"policy\":\"IOC\"") != std::string::npos), function test_order_serialization, file test_order.cpp, line 87.
+<end of output>
+Test time =   0.48 sec
+----------------------------------------------------------
+Test Failed.
+"order_tests" end time: Aug 08 16:49 IST
+"order_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/3 Testing: price_utils_tests
+2/3 Test: price_utils_tests
+Command: "/Users/kundan/PROJECTS/The Curve DEX Hackathon/curve-trading-agent/build/test_price_utils"
+Directory: /Users/kundan/PROJECTS/The Curve DEX Hackathon/curve-trading-agent/build
+"price_utils_tests" start time: Aug 08 16:49 IST
+Output:
+----------------------------------------------------------
+Running PriceUtils tests...
+Testing decimal conversions...
+✓ Decimal conversion test passed
+Testing price calculations...
+✓ Price calculation test passed
+Testing slippage calculations...
+✓ Slippage calculation test passed
+Testing price target validation...
+✓ Price target validation test passed
+Testing formatting...
+✓ Formatting test passed
+
+✅ All PriceUtils tests passed!
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"price_utils_tests" end time: Aug 08 16:49 IST
+"price_utils_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: policies_tests
+3/3 Test: policies_tests
+Command: "/Users/kundan/PROJECTS/The Curve DEX Hackathon/curve-trading-agent/build/test_policies"
+Directory: /Users/kundan/PROJECTS/The Curve DEX Hackathon/curve-trading-agent/build
+"policies_tests" start time: Aug 08 16:49 IST
+Output:
+----------------------------------------------------------
+Running OrderPolicies tests...
+Testing policy descriptions...
+✓ Policy descriptions test passed
+Testing quote acceptability...
+Assertion failed: (!OrderPolicies::isQuoteAcceptable(order, badQuote, 6, 18)), function test_quote_acceptability, file test_policies.cpp, line 46.
+<end of output>
+Test time =   0.50 sec
+----------------------------------------------------------
+Test Failed.
+"policies_tests" end time: Aug 08 16:49 IST
+"policies_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 08 16:49 IST

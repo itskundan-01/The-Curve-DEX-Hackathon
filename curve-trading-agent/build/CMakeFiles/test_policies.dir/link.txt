@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/test_policies.dir/tests/test_policies.cpp.o -o test_policies  libcurve_trading_core.a
