@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/trading_agent.dir/src/main.cpp.o -o trading_agent  libcurve_trading_core.a

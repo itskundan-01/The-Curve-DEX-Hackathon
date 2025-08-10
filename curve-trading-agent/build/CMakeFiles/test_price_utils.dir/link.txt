@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/test_price_utils.dir/tests/test_price_utils.cpp.o -o test_price_utils  libcurve_trading_core.a
