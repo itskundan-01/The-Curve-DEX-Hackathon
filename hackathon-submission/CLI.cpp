@@ -67,6 +67,10 @@ void CLI::interactiveMode() {
             handleToggleMode();
         } else if (command == "balance" || command == "bal") {
             handleCheckBalance();
+        } else if (command == "track" || command == "logs") {
+            handleTrackLogs();
+        } else if (command == "close") {
+            handleCloseLogs();
         } else {
             std::cout << "Unknown command: " << input << std::endl;
             std::cout << "Type 'help' for available commands." << std::endl;
@@ -520,6 +524,8 @@ void CLI::handleShowHelp() {
     std::cout << "  config          - Show engine configuration" << std::endl;
     std::cout << "  mode/toggle     - Toggle between DEMO and REAL trading mode" << std::endl;
     std::cout << "  balance/bal     - Check real token balances" << std::endl;
+    std::cout << "  track/logs      - Start real-time price tracking" << std::endl;
+    std::cout << "  close           - Stop price tracking (only when active)" << std::endl;
     std::cout << "  help/?          - Show this help message" << std::endl;
     std::cout << "  quit/exit       - Exit the application" << std::endl;
     
@@ -640,6 +646,29 @@ std::vector<std::string> CLI::splitString(const std::string& str, char delimiter
     }
     
     return tokens;
+}
+
+void CLI::handleTrackLogs() {
+    if (trackingActive_) {
+        std::cout << "Price tracking is already active! Use 'close' to stop tracking." << std::endl;
+        return;
+    }
+    
+    trackingActive_ = true;
+    engine_->setVerboseLogging(true);  // Enable engine verbose output
+    std::cout << "✅ Price tracking activated! You'll now see real-time price updates." << std::endl;
+    std::cout << "💡 Use 'close' command to stop tracking and clean up the display." << std::endl;
+}
+
+void CLI::handleCloseLogs() {
+    if (!trackingActive_) {
+        std::cout << "Price tracking is not active. Use 'track' or 'logs' to start tracking." << std::endl;
+        return;
+    }
+    
+    trackingActive_ = false;
+    engine_->setVerboseLogging(false);  // Disable engine verbose output
+    std::cout << "✅ Price tracking stopped. Display is now clean for order submission." << std::endl;
 }
 
 } // namespace CurveTrading

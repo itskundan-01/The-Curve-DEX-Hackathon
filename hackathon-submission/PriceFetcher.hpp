@@ -21,6 +21,7 @@ class PriceFetcher {
 private:
     std::map<std::string, PriceData> priceCache_;
     const uint64_t CACHE_EXPIRY_SECONDS = 30; // Cache prices for 30 seconds
+    bool verboseLogging_ = false;  // New: control output verbosity
     
     // HTTP response structure
     struct HTTPResponse {
@@ -55,6 +56,10 @@ public:
     // Cache management
     void clearCache();
     void setCacheExpiry(uint64_t seconds);
+    
+    // Verbose logging control
+    void setVerboseLogging(bool verbose) { verboseLogging_ = verbose; }
+    bool isVerboseLogging() const { return verboseLogging_; }
     
     // Utility methods
     static double calculateInversePrice(double price);

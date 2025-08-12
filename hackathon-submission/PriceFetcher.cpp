@@ -113,13 +113,17 @@ PriceData PriceFetcher::fetchFromCoinGecko(const std::string& tokenPair) {
                     result.price = sellPriceUSD / buyPriceUSD;
                     result.isValid = true;
                     
-                    std::cout << "[REAL PRICE] " << sellToken << "/" << buyToken << ": " 
-                              << result.price << " (via CoinGecko)" << std::endl;
+                    if (verboseLogging_) {
+                        std::cout << "[REAL PRICE] " << sellToken << "/" << buyToken << ": " 
+                                  << result.price << " (via CoinGecko)" << std::endl;
+                    }
                 }
             }
         }
     } catch (const std::exception& e) {
-        std::cout << "[PRICE ERROR] CoinGecko fetch failed: " << e.what() << std::endl;
+        if (verboseLogging_) {
+            std::cout << "[PRICE ERROR] CoinGecko fetch failed: " << e.what() << std::endl;
+        }
     }
     
     return result;
@@ -151,8 +155,10 @@ PriceData PriceFetcher::fetchFrom1inch(const std::string& sellToken, const std::
                     result.price = toAmount / fromAmount;
                     result.isValid = true;
                     
-                    std::cout << "[REAL PRICE] " << sellToken << "/" << buyToken << ": " 
-                              << result.price << " (via 1inch)" << std::endl;
+                    if (verboseLogging_) {
+                        std::cout << "[REAL PRICE] " << sellToken << "/" << buyToken << ": " 
+                                  << result.price << " (via 1inch)" << std::endl;
+                    }
                 }
             }
         }
@@ -225,8 +231,10 @@ PriceData PriceFetcher::getRealTimePrice(const std::string& sellToken, const std
     // Check cache first
     auto it = priceCache_.find(pairKey);
     if (it != priceCache_.end() && isCacheValid(it->second)) {
-        std::cout << "[CACHED PRICE] " << sellToken << "/" << buyToken << ": " 
-                  << it->second.price << " (cached)" << std::endl;
+        if (verboseLogging_) {
+            std::cout << "[CACHED PRICE] " << sellToken << "/" << buyToken << ": " 
+                      << it->second.price << " (cached)" << std::endl;
+        }
         return it->second;
     }
     
@@ -259,8 +267,10 @@ PriceData PriceFetcher::getPriceWithFallback(const std::string& sellToken, const
     }
     
     // All sources failed - return invalid
-    std::cout << "[PRICE WARNING] All real price sources failed for " 
-              << sellToken << "/" << buyToken << std::endl;
+    if (verboseLogging_) {
+        std::cout << "[PRICE WARNING] All real price sources failed for " 
+                  << sellToken << "/" << buyToken << std::endl;
+    }
     
     PriceData fallback;
     fallback.isValid = false;

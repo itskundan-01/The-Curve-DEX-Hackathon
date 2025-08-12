@@ -43,6 +43,9 @@ private:
     std::unique_ptr<CurveMetaRegistry> registry_;
     std::unique_ptr<PriceFetcher> priceFetcher_;
     
+    // Verbose logging control
+    std::atomic<bool> verboseLogging_{false};
+    
     // Order management
     std::map<std::string, Order> activeOrders_;
     mutable std::mutex ordersMutex_;
@@ -69,6 +72,15 @@ public:
     bool isDryRun() const { return config_.dryRun; }
     void setDryRun(bool dryRun) { config_.dryRun = dryRun; }
     EthereumRPC* getRPC() const { return rpc_.get(); }
+    
+    // Verbose logging control
+    void setVerboseLogging(bool verbose) { 
+        verboseLogging_ = verbose; 
+        if (priceFetcher_) {
+            priceFetcher_->setVerboseLogging(verbose);
+        }
+    }
+    bool isVerboseLogging() const { return verboseLogging_; }
     
     // Order management
     std::string submitOrder(const Order& order);

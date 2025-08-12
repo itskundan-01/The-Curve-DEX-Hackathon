@@ -11,6 +11,7 @@ class CLI {
 private:
     std::unique_ptr<LimitOrderEngine> engine_;
     bool running_ = false;
+    bool trackingActive_ = false;  // New: tracks if price monitoring is active
     
     // Token configuration for Sepolia testnet
     struct TokenInfo {
@@ -40,6 +41,8 @@ public:
     void handleToggleMode();
     void handleCheckBalance();
     void handleShowHelp();
+    void handleTrackLogs();    // New: start tracking
+    void handleCloseLogs();    // New: stop tracking
     
     // Interactive mode
     void interactiveMode();
@@ -50,6 +53,7 @@ public:
     std::string parseTokenSymbol(const std::string& input);
     double parseAmount(const std::string& input);
     OrderPolicy parsePolicy(const std::string& input);
+    bool isTrackingActive() const { return trackingActive_; }  // New: check tracking state
     
 private:
     void initializeTokens();

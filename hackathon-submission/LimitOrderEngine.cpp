@@ -147,17 +147,23 @@ double LimitOrderEngine::getCurrentPrice(const std::string& pool, int32_t i, int
         buyToken = "USDC";
     }
     
-    std::cout << "Fetching real-time price for " << sellToken << "/" << buyToken << std::endl;
+    if (verboseLogging_) {
+        std::cout << "Fetching real-time price for " << sellToken << "/" << buyToken << std::endl;
+    }
     
     // Try real-time price fetching first
     PriceData realPrice = priceFetcher_->getRealTimePrice(sellToken, buyToken);
     if (realPrice.isValid) {
-        std::cout << "Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
-                  << " (source: " << realPrice.source << ")" << std::endl;
+        if (verboseLogging_) {
+            std::cout << "Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
+                      << " (source: " << realPrice.source << ")" << std::endl;
+        }
         return realPrice.price;
     }
     
-    std::cout << "Real-time price unavailable, trying blockchain calls..." << std::endl;
+    if (verboseLogging_) {
+        std::cout << "Real-time price unavailable, trying blockchain calls..." << std::endl;
+    }
     
     try {
         // Try blockchain pool call as secondary option
@@ -195,17 +201,23 @@ double LimitOrderEngine::getCurrentPrice(const std::string& pool, int32_t i, int
 }
 
 double LimitOrderEngine::getRealTimePrice(const std::string& sellToken, const std::string& buyToken) {
-    std::cout << "Fetching real-time price for " << sellToken << "/" << buyToken << std::endl;
+    if (verboseLogging_) {
+        std::cout << "Fetching real-time price for " << sellToken << "/" << buyToken << std::endl;
+    }
     
     // Try real-time price fetching
     PriceData realPrice = priceFetcher_->getRealTimePrice(sellToken, buyToken);
     if (realPrice.isValid) {
-        std::cout << "Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
-                  << " (source: " << realPrice.source << ")" << std::endl;
+        if (verboseLogging_) {
+            std::cout << "Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
+                      << " (source: " << realPrice.source << ")" << std::endl;
+        }
         return realPrice.price;
     }
     
-    std::cout << "Real-time price unavailable, falling back to demo pricing..." << std::endl;
+    if (verboseLogging_) {
+        std::cout << "Real-time price unavailable, falling back to demo pricing..." << std::endl;
+    }
     
     // Fallback to demo pricing with proper token mapping
     int32_t i, j;
@@ -291,7 +303,9 @@ ExecutionResult LimitOrderEngine::executeOrder(const std::string& orderId) {
 }
 
 void LimitOrderEngine::monitorLoop() {
-    std::cout << "Price monitoring started (interval: " << config_.priceCheckIntervalMs << "ms)" << std::endl;
+    if (verboseLogging_) {
+        std::cout << "Price monitoring started (interval: " << config_.priceCheckIntervalMs << "ms)" << std::endl;
+    }
     
     while (running_) {
         try {
@@ -324,7 +338,9 @@ void LimitOrderEngine::monitorLoop() {
         }
     }
     
-    std::cout << "Price monitoring stopped" << std::endl;
+    if (verboseLogging_) {
+        std::cout << "Price monitoring stopped" << std::endl;
+    }
 }
 
 void LimitOrderEngine::processOrder(Order& order) {
@@ -343,7 +359,9 @@ void LimitOrderEngine::processOrder(Order& order) {
         PolicyResult result = OrderPolicies::evaluateOrder(order, currentPrice, availableLiquidity);
         
         if (result.shouldExecute) {
-            std::cout << "Executing order " << order.id << ": " << result.reason << std::endl;
+            if (verboseLogging_) {
+                std::cout << "Executing order " << order.id << ": " << result.reason << std::endl;
+            }
             ExecutionResult execResult = executeSwap(order, currentPrice);
             
             std::lock_guard<std::mutex> lock(ordersMutex_);
