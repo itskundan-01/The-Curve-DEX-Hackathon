@@ -128,10 +128,24 @@ CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/PriceUtils.cpp" -o CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.s
 
+CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o: CMakeFiles/curve_limit_order_agent.dir/flags.make
+CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o: /Users/kundan/PROJECTS/The\ Curve\ DEX\ Hackathon/hackathon-submission/PriceFetcher.cpp
+CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o: CMakeFiles/curve_limit_order_agent.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o -MF CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o.d -o CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o -c "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/PriceFetcher.cpp"
+
+CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/PriceFetcher.cpp" > CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.i
+
+CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/PriceFetcher.cpp" -o CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.s
+
 CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o: CMakeFiles/curve_limit_order_agent.dir/flags.make
 CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o: /Users/kundan/PROJECTS/The\ Curve\ DEX\ Hackathon/hackathon-submission/LimitOrderEngine.cpp
 CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o: CMakeFiles/curve_limit_order_agent.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o -MF CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o.d -o CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o -c "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/LimitOrderEngine.cpp"
 
 CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.s: cmake_force
 CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o: CMakeFiles/curve_limit_order_agent.dir/flags.make
 CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o: /Users/kundan/PROJECTS/The\ Curve\ DEX\ Hackathon/hackathon-submission/CLI.cpp
 CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o: CMakeFiles/curve_limit_order_agent.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o -MF CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o.d -o CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o -c "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/CLI.cpp"
 
 CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.s: cmake_force
 CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o: CMakeFiles/curve_limit_order_agent.dir/flags.make
 CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o: /Users/kundan/PROJECTS/The\ Curve\ DEX\ Hackathon/hackathon-submission/blockchain_services.cpp
 CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o: CMakeFiles/curve_limit_order_agent.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o -MF CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o.d -o CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o -c "/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/blockchain_services.cpp"
 
 CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.i: cmake_force
@@ -176,6 +190,7 @@ curve_limit_order_agent_OBJECTS = \
 "CMakeFiles/curve_limit_order_agent.dir/Order.cpp.o" \
 "CMakeFiles/curve_limit_order_agent.dir/OrderPolicies.cpp.o" \
 "CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.o" \
+"CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o" \
 "CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o" \
 "CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o" \
 "CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o"
@@ -187,13 +202,14 @@ curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/main.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/Order.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/OrderPolicies.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.o
+curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/LimitOrderEngine.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/CLI.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/build.make
 curve_limit_order_agent: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libcurl.tbd
 curve_limit_order_agent: CMakeFiles/curve_limit_order_agent.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable curve_limit_order_agent"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/kundan/PROJECTS/The Curve DEX Hackathon/hackathon-submission/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable curve_limit_order_agent"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/curve_limit_order_agent.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

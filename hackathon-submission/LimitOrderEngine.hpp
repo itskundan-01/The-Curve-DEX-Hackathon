@@ -3,6 +3,7 @@
 #include "Order.hpp"
 #include "OrderPolicies.hpp"
 #include "PriceUtils.hpp"
+#include "PriceFetcher.hpp"
 #include "blockchain_services.hpp"
 #include <memory>
 #include <vector>
@@ -40,6 +41,7 @@ private:
     EngineConfig config_;
     std::unique_ptr<EthereumRPC> rpc_;
     std::unique_ptr<CurveMetaRegistry> registry_;
+    std::unique_ptr<PriceFetcher> priceFetcher_;
     
     // Order management
     std::map<std::string, Order> activeOrders_;
@@ -63,6 +65,11 @@ public:
     void stop();
     bool isRunning() const { return running_; }
     
+    // Configuration
+    bool isDryRun() const { return config_.dryRun; }
+    void setDryRun(bool dryRun) { config_.dryRun = dryRun; }
+    EthereumRPC* getRPC() const { return rpc_.get(); }
+    
     // Order management
     std::string submitOrder(const Order& order);
     bool cancelOrder(const std::string& orderId);
@@ -75,6 +82,7 @@ public:
     
     // Price monitoring
     double getCurrentPrice(const std::string& pool, int32_t i, int32_t j, uint64_t amount);
+    double getRealTimePrice(const std::string& sellToken, const std::string& buyToken);
     uint64_t getAvailableLiquidity(const std::string& pool, int32_t i, int32_t j, uint64_t amount);
     
     // Manual execution (for testing)
@@ -89,6 +97,9 @@ private:
     // Blockchain interactions
     std::string findPool(const std::string& fromToken, const std::string& toToken);
     uint64_t checkBalance(const std::string& tokenAddress);
+    
+    // Enhanced demo pricing with market simulation
+    double getEnhancedDemoPrice(int32_t i, int32_t j, uint64_t amount);
     
     // Logging
     void logOrderEvent(const Order& order, const std::string& event, const std::string& details = "");

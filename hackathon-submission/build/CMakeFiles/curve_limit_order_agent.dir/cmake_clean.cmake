@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/curve_limit_order_agent.dir/Order.cpp.o.d"
   "CMakeFiles/curve_limit_order_agent.dir/OrderPolicies.cpp.o"
   "CMakeFiles/curve_limit_order_agent.dir/OrderPolicies.cpp.o.d"
+  "CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o"
+  "CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o.d"
   "CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.o"
   "CMakeFiles/curve_limit_order_agent.dir/PriceUtils.cpp.o.d"
   "CMakeFiles/curve_limit_order_agent.dir/blockchain_services.cpp.o"

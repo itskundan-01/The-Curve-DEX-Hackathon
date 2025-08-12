@@ -3,6 +3,8 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <random>
+#include <algorithm>
 
 namespace CurveTrading {
 
@@ -10,11 +12,15 @@ LimitOrderEngine::LimitOrderEngine(const EngineConfig& config) : config_(config)
     // Initialize RPC connection
     rpc_ = std::make_unique<EthereumRPC>(config.rpcUrl);
     
+    // Initialize Price Fetcher for real-time prices
+    priceFetcher_ = std::make_unique<PriceFetcher>();
+    
     // Initialize Curve Meta Registry (hardcoded for now, should be configurable)
     const std::string METAREGISTRY = "0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC";
     registry_ = std::make_unique<CurveMetaRegistry>(METAREGISTRY, rpc_.get());
     
     std::cout << "LimitOrderEngine initialized with RPC: " << config.rpcUrl << std::endl;
+    std::cout << "Real-time price fetching enabled via CoinGecko & 1inch APIs" << std::endl;
 }
 
 LimitOrderEngine::~LimitOrderEngine() {
@@ -123,32 +129,150 @@ ExecutionResult LimitOrderEngine::getExecutionResult(const std::string& orderId)
 }
 
 double LimitOrderEngine::getCurrentPrice(const std::string& pool, int32_t i, int32_t j, uint64_t amount) {
+    // Map indices to actual token symbols based on common patterns
+    // This is a more flexible approach than hardcoding USDC/ETH
+    std::string sellToken, buyToken;
+    
+    // For the CLI price checking, we'll need to get the actual tokens from the pool/context
+    // For now, use a simple mapping but this should be improved
+    if (i == 0 && j == 1) {
+        sellToken = "USDC";  // Default assumption
+        buyToken = "ETH";
+    } else if (i == 1 && j == 0) {
+        sellToken = "ETH";
+        buyToken = "USDC";
+    } else {
+        // For other indices, default to ETH pairs
+        sellToken = "ETH";
+        buyToken = "USDC";
+    }
+    
+    std::cout << "Fetching real-time price for " << sellToken << "/" << buyToken << std::endl;
+    
+    // Try real-time price fetching first
+    PriceData realPrice = priceFetcher_->getRealTimePrice(sellToken, buyToken);
+    if (realPrice.isValid) {
+        std::cout << "✓ Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
+                  << " (source: " << realPrice.source << ")" << std::endl;
+        return realPrice.price;
+    }
+    
+    std::cout << "Real-time price unavailable, trying blockchain calls..." << std::endl;
+    
     try {
-        // First attempt real Curve pool call
+        // Try blockchain pool call as secondary option
         CurvePool curvePool(pool, rpc_.get());
         uint64_t outputAmount = curvePool.get_dy(i, j, amount);
         
-        uint8_t inputDecimals = getTokenDecimals(""); // Would need token address
-        uint8_t outputDecimals = getTokenDecimals(""); // Would need token address
-        
-        // For now, assume 18 decimals for both (WETH/USDC would be 18/6)
-        return PriceUtils::calculatePrice(amount, outputAmount, 18, 18);
-    } catch (const std::exception& e) {
-        std::cerr << "Real pool call failed, using demo pricing: " << e.what() << std::endl;
-        
-        // Fallback to realistic demo prices for hackathon demonstration
-        // These simulate real market conditions
-        if (i == 0 && j == 1) { // USDC -> WETH typically
-            return 0.0003654; // 1 USDC = 0.0003654 WETH (realistic rate)
-        } else if (i == 1 && j == 0) { // WETH -> USDC typically  
-            return 2736.5; // 1 WETH = 2736.5 USDC (realistic rate)
-        } else {
-            return 1.001; // DAI/USDC or similar stablecoin pairs
+        if (outputAmount > 0) {
+            // Check if the returned value seems unrealistic (likely from factory address)
+            double rawPrice = static_cast<double>(outputAmount) / static_cast<double>(amount);
+            
+            if (rawPrice > 10000 || rawPrice < 0.0001) {
+                // Fall through to demo pricing
+            } else {
+                // For reasonable values, try different decimal assumptions
+                double priceWith6Decimals = static_cast<double>(outputAmount) / 1e6 / (static_cast<double>(amount) / 1e18);
+                double priceWith18Decimals = static_cast<double>(outputAmount) / 1e18 / (static_cast<double>(amount) / 1e18);
+                
+                // Choose the more reasonable price (updated for current ETH prices ~3800)
+                if (priceWith18Decimals > 3000 && priceWith18Decimals < 5000) {
+                    std::cout << "✓ Blockchain price (18 decimals): " << priceWith18Decimals << std::endl;
+                    return priceWith18Decimals;
+                } else if (priceWith6Decimals > 3000 && priceWith6Decimals < 5000) {
+                    std::cout << "✓ Blockchain price (6 decimals): " << priceWith6Decimals << std::endl;
+                    return priceWith6Decimals;
+                }
+            }
         }
+    } catch (const std::exception& e) {
+        std::cout << "Blockchain price call failed: " << e.what() << std::endl;
+    }
+    
+    std::cout << "Falling back to demo pricing simulation..." << std::endl;
+    // Final fallback to demo pricing
+    return getEnhancedDemoPrice(i, j, amount);
+}
+
+double LimitOrderEngine::getRealTimePrice(const std::string& sellToken, const std::string& buyToken) {
+    std::cout << "Fetching real-time price for " << sellToken << "/" << buyToken << std::endl;
+    
+    // Try real-time price fetching
+    PriceData realPrice = priceFetcher_->getRealTimePrice(sellToken, buyToken);
+    if (realPrice.isValid) {
+        std::cout << "✓ Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
+                  << " (source: " << realPrice.source << ")" << std::endl;
+        return realPrice.price;
+    }
+    
+    std::cout << "Real-time price unavailable, falling back to demo pricing..." << std::endl;
+    
+    // Fallback to demo pricing with proper token mapping
+    int32_t i, j;
+    if (sellToken == "USDC" && (buyToken == "ETH" || buyToken == "WETH")) {
+        i = 0; j = 1;
+    } else if ((sellToken == "ETH" || sellToken == "WETH") && buyToken == "USDC") {
+        i = 1; j = 0;
+    } else if (sellToken == "DAI" && (buyToken == "ETH" || buyToken == "WETH")) {
+        i = 0; j = 1;
+    } else if ((sellToken == "ETH" || sellToken == "WETH") && buyToken == "DAI") {
+        i = 1; j = 0;
+    } else {
+        // Default mapping
+        i = 0; j = 1;
+    }
+    
+    return getEnhancedDemoPrice(i, j, 1000000000000000000); // 1 ETH worth
+}
+
+double LimitOrderEngine::getEnhancedDemoPrice(int32_t i, int32_t j, uint64_t amount) {
+    // Suppress unused parameter warning
+    (void)amount;
+    
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_real_distribution<> volatility(-0.02, 0.02); // ±2% volatility
+    static auto last_update = std::chrono::steady_clock::now();
+    static double eth_price_usd = 3800.0; // Current ETH price in USD (Aug 2025)
+    static double usdc_eth_rate = 1.0 / eth_price_usd; // USDC per ETH (around 0.000263)
+    static int update_counter = 0;
+    
+    // Simulate price movements every 10 seconds
+    auto now = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_update);
+    
+    if (elapsed.count() >= 10) {
+        double price_change = volatility(gen);
+        eth_price_usd *= (1.0 + price_change);
+        eth_price_usd = std::max(3000.0, std::min(4500.0, eth_price_usd)); // Keep within realistic bounds for current market
+        usdc_eth_rate = 1.0 / eth_price_usd;
+        last_update = now;
+        update_counter++;
+        
+        std::cout << "[PRICE UPDATE #" << update_counter << "] ETH: $" << eth_price_usd 
+                  << " (change: " << (price_change > 0 ? "+" : "") << (price_change * 100) << "%)" << std::endl;
+    }
+    
+    // Return appropriate price based on token pair direction
+    // i=0, j=1 typically means selling token 0 for token 1
+    if ((i == 0 && j == 1)) { 
+        // Selling first token for second - return rate
+        return usdc_eth_rate; // USDC per ETH (small number like 0.0004)
+    } else if ((i == 1 && j == 0)) {
+        // Selling second token for first - return inverse rate  
+        return eth_price_usd; // ETH to USDC (large number like 2500)
+    } else { 
+        // For other pairs (DAI, WETH), assume similar to ETH
+        return (i == 0) ? usdc_eth_rate : eth_price_usd;
     }
 }
 
 uint64_t LimitOrderEngine::getAvailableLiquidity(const std::string& pool, int32_t i, int32_t j, uint64_t amount) {
+    // Suppress unused parameter warnings
+    (void)pool;
+    (void)i;
+    (void)j;
+    
     // For simplicity, assume full liquidity is available
     // In a real implementation, this would check pool reserves
     return amount;

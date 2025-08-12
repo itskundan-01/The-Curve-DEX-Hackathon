@@ -37,6 +37,8 @@ public:
     void handleMonitorOrders();
     void handleCheckPrice();
     void handleShowConfig();
+    void handleToggleMode();
+    void handleCheckBalance();
     void handleShowHelp();
     
     // Interactive mode

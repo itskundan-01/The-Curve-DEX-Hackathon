@@ -20,6 +20,7 @@ set(SOURCES
     Order.cpp
     OrderPolicies.cpp
     PriceUtils.cpp
+    PriceFetcher.cpp
     LimitOrderEngine.cpp
     CLI.cpp
     blockchain_services.cpp

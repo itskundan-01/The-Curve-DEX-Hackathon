@@ -280,6 +280,30 @@ OrderPolicies.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curve_limit_order_agent.dir/build.make CMakeFiles/curve_limit_order_agent.dir/OrderPolicies.cpp.s
 .PHONY : OrderPolicies.cpp.s
 
+PriceFetcher.o: PriceFetcher.cpp.o
+.PHONY : PriceFetcher.o
+
+# target to build an object file
+PriceFetcher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curve_limit_order_agent.dir/build.make CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.o
+.PHONY : PriceFetcher.cpp.o
+
+PriceFetcher.i: PriceFetcher.cpp.i
+.PHONY : PriceFetcher.i
+
+# target to preprocess a source file
+PriceFetcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curve_limit_order_agent.dir/build.make CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.i
+.PHONY : PriceFetcher.cpp.i
+
+PriceFetcher.s: PriceFetcher.cpp.s
+.PHONY : PriceFetcher.s
+
+# target to generate assembly for a file
+PriceFetcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curve_limit_order_agent.dir/build.make CMakeFiles/curve_limit_order_agent.dir/PriceFetcher.cpp.s
+.PHONY : PriceFetcher.cpp.s
+
 PriceUtils.o: PriceUtils.cpp.o
 .PHONY : PriceUtils.o
 
@@ -378,6 +402,9 @@ help:
 	@echo "... OrderPolicies.o"
 	@echo "... OrderPolicies.i"
 	@echo "... OrderPolicies.s"
+	@echo "... PriceFetcher.o"
+	@echo "... PriceFetcher.i"
+	@echo "... PriceFetcher.s"
 	@echo "... PriceUtils.o"
 	@echo "... PriceUtils.i"
 	@echo "... PriceUtils.s"
