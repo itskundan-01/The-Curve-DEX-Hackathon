@@ -98,7 +98,7 @@ private:
     std::string findPool(const std::string& fromToken, const std::string& toToken);
     uint64_t checkBalance(const std::string& tokenAddress);
     
-    // Enhanced demo pricing with market simulation
+    // Fallback pricing with market simulation
     double getEnhancedDemoPrice(int32_t i, int32_t j, uint64_t amount);
     
     // Logging

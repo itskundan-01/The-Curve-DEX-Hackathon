@@ -163,7 +163,7 @@ void CLI::handleSubmitOrder() {
                     return;
                 }
                 expiryTime = std::time(nullptr) + secondsFromNow;
-                std::cout << "✓ Order will expire in " << secondsFromNow << " seconds" << std::endl;
+                std::cout << "Order will expire in " << secondsFromNow << " seconds" << std::endl;
             } catch (const std::exception& e) {
                 std::cout << "Error: Invalid expiry time format" << std::endl;
                 return;
@@ -228,7 +228,7 @@ void CLI::handleSubmitOrder() {
             if (expiryTime > 0) {
                 expiryTimePoint = std::chrono::system_clock::from_time_t(expiryTime);
                 time_t expiry_t = static_cast<time_t>(expiryTime);
-                std::cout << "✓ GTT order expiry set for " << std::ctime(&expiry_t);
+                std::cout << "GTT order expiry set for " << std::ctime(&expiry_t);
             } else {
                 std::cout << "Error: GTT orders require valid expiry time" << std::endl;
                 return;
@@ -325,7 +325,7 @@ void CLI::handleCancelOrder() {
         size_t index = std::stoull(input);
         if (index >= 1 && index <= orders.size()) {
             orderId = orders[index - 1].id;
-            std::cout << "✓ Selected order: " << orderId.substr(0, 8) << "..." << std::endl;
+            std::cout << "Selected order: " << orderId.substr(0, 8) << "..." << std::endl;
         } else {
             std::cout << "Error: Invalid index. Must be between 1 and " << orders.size() << std::endl;
             return;
@@ -351,9 +351,9 @@ void CLI::handleCancelOrder() {
     }
     
     if (engine_->cancelOrder(orderId)) {
-        std::cout << "✅ Order " << orderId.substr(0, 8) << "... canceled successfully!" << std::endl;
+        std::cout << "Order " << orderId.substr(0, 8) << "... canceled successfully!" << std::endl;
     } else {
-        std::cout << "❌ Failed to cancel order " << orderId.substr(0, 8) << "..." << std::endl;
+        std::cout << "Failed to cancel order " << orderId.substr(0, 8) << "..." << std::endl;
         std::cout << "Order may have already been filled, canceled, or expired." << std::endl;
     }
 }
@@ -389,7 +389,6 @@ void CLI::handleCheckPrice() {
     
     std::string sellToken, buyToken;
     std::string input;
-    double amount;
     
     std::cout << "Sell token: ";
     std::getline(std::cin, sellToken);
@@ -399,30 +398,16 @@ void CLI::handleCheckPrice() {
     
     std::cout << "Amount: ";
     std::getline(std::cin, input);
-    amount = std::stod(input);
     
-    // Look up tokens and pool - handle ETH specially
-    uint8_t sellDecimals;
-    
-    if (sellToken == "ETH") {
-        sellDecimals = 18;
-    } else {
-        auto sellIt = tokens_.find(sellToken);
-        if (sellIt == tokens_.end()) {
-            std::cout << "Error: Unknown token: " << sellToken << std::endl;
-            return;
-        }
-        sellDecimals = sellIt->second.decimals;
+    // Validate tokens exist
+    if (sellToken != "ETH" && tokens_.find(sellToken) == tokens_.end()) {
+        std::cout << "Error: Unknown token: " << sellToken << std::endl;
+        return;
     }
     
-    if (buyToken == "ETH") {
-        // ETH has 18 decimals - stored for potential future use
-    } else {
-        auto buyIt = tokens_.find(buyToken);
-        if (buyIt == tokens_.end()) {
-            std::cout << "Error: Unknown token: " << buyToken << std::endl;
-            return;
-        }
+    if (buyToken != "ETH" && tokens_.find(buyToken) == tokens_.end()) {
+        std::cout << "Error: Unknown token: " << buyToken << std::endl;
+        return;
         // Buy token decimals stored for potential future use
     }
     
@@ -440,8 +425,6 @@ void CLI::handleCheckPrice() {
     }
     
     try {
-        uint64_t amountIn = PriceUtils::fromHumanReadable(amount, sellDecimals);
-        
         // Use the new real-time price method with actual token symbols
         double currentPrice = engine_->getRealTimePrice(sellToken, buyToken);
         

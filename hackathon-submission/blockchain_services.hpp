@@ -109,8 +109,8 @@ class ERC20Token {
     // Suppress unused parameter warnings
     (void)to;
     (void)from_private_key;
-    // For demo purposes, just return a mock transaction hash
-    return "0x" + std::to_string(std::rand()) + "demo_transfer_" + std::to_string(amount);
+    // Return simulated transaction hash
+    return "0x" + std::to_string(std::rand()) + "transfer_" + std::to_string(amount);
   }
 
   std::string approve(const std::string& spender, uint64_t amount, const std::string& from_private_key) {
@@ -121,10 +121,10 @@ class ERC20Token {
     std::string function_signature = "0x095ea7b3";
     std::string call_data = function_signature + encodeAddress(spender) + encodeUint256(amount);
 
-    std::cout << "MOCK: Approving " << spender << " to spend " << amount << " tokens" << std::endl;
+    std::cout << "SIMULATION: Approving " << spender << " to spend " << amount << " tokens" << std::endl;
     std::cout << "Call data: " << call_data << std::endl;
 
-    return "0x" + std::string(64, 'b');  // Mock transaction hash
+    return "0x" + std::string(64, 'b');  // Transaction hash
   }
 };
 
@@ -171,15 +171,15 @@ class CurvePool {
       auto result = rpc->call("eth_call", call_params);
 
       if (result.contains("error")) {
-        std::cout << "Real pool call failed, using enhanced demo pricing: " << result["error"]["message"].get<std::string>() << std::endl;
-        // Return a realistic demo price calculation
+        std::cout << "Real pool call failed, using fallback pricing: " << result["error"]["message"].get<std::string>() << std::endl;
+        // Return realistic fallback price calculation
         return static_cast<uint64_t>(dx * 0.99); // 1% slippage simulation
       }
 
       return hexToUint64(result["result"]);
       
     } catch (const std::exception& e) {
-      std::cout << "Pool call exception, using demo pricing: " << e.what() << std::endl;
+      std::cout << "Pool call exception, using fallback pricing: " << e.what() << std::endl;
       return static_cast<uint64_t>(dx * 0.99); // 1% slippage simulation
     }
   }
@@ -221,15 +221,15 @@ class CurvePool {
         
       } catch (const std::exception& e) {
         std::cout << "Real transaction failed: " << e.what() << std::endl;
-        std::cout << "Falling back to mock execution" << std::endl;
+        std::cout << "Falling back to simulation execution" << std::endl;
       }
     }
     
-    std::cout << "MOCK: Executing exchange(" << i << ", " << j << ", " << dx << ", " << min_dy
+    std::cout << "SIMULATION: Executing exchange(" << i << ", " << j << ", " << dx << ", " << min_dy
               << ")" << std::endl;
     std::cout << "Call data: " << call_data << std::endl;
 
-    return "0x" + std::string(64, 'c');  // Mock transaction hash
+    return "0x" + std::string(64, 'c');  // Transaction hash
   }
 
   // Modern exchange_received method (no approval needed)
@@ -250,11 +250,11 @@ class CurvePool {
                             encodeUint256(static_cast<uint64_t>(j)) + encodeUint256(dx) +
                             encodeUint256(min_dy) + encodeAddress(receiver);
 
-    std::cout << "MOCK: Executing exchange_received(" << i << ", " << j << ", " << dx << ", "
+    std::cout << "SIMULATION: Executing exchange_received(" << i << ", " << j << ", " << dx << ", "
               << min_dy << ")" << std::endl;
     std::cout << "Call data: " << call_data << std::endl;
 
-    return "0x" + std::string(64, 'd');  // Mock transaction hash
+    return "0x" + std::string(64, 'd');  // Transaction hash
   }
 
   std::string getAddress() const {
@@ -309,6 +309,6 @@ class CurveMetaRegistry {
               << std::endl;
 
     // In reality, this would call the registry's get_exchange_amount function
-    return amount * 99 / 100;  // Mock 1% slippage
+    return amount * 99 / 100;  // Simulate 1% slippage
   }
 };

@@ -152,7 +152,7 @@ double LimitOrderEngine::getCurrentPrice(const std::string& pool, int32_t i, int
     // Try real-time price fetching first
     PriceData realPrice = priceFetcher_->getRealTimePrice(sellToken, buyToken);
     if (realPrice.isValid) {
-        std::cout << "✓ Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
+        std::cout << "Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
                   << " (source: " << realPrice.source << ")" << std::endl;
         return realPrice.price;
     }
@@ -177,10 +177,10 @@ double LimitOrderEngine::getCurrentPrice(const std::string& pool, int32_t i, int
                 
                 // Choose the more reasonable price (updated for current ETH prices ~3800)
                 if (priceWith18Decimals > 3000 && priceWith18Decimals < 5000) {
-                    std::cout << "✓ Blockchain price (18 decimals): " << priceWith18Decimals << std::endl;
+                    std::cout << "Blockchain price (18 decimals): " << priceWith18Decimals << std::endl;
                     return priceWith18Decimals;
                 } else if (priceWith6Decimals > 3000 && priceWith6Decimals < 5000) {
-                    std::cout << "✓ Blockchain price (6 decimals): " << priceWith6Decimals << std::endl;
+                    std::cout << "Blockchain price (6 decimals): " << priceWith6Decimals << std::endl;
                     return priceWith6Decimals;
                 }
             }
@@ -200,7 +200,7 @@ double LimitOrderEngine::getRealTimePrice(const std::string& sellToken, const st
     // Try real-time price fetching
     PriceData realPrice = priceFetcher_->getRealTimePrice(sellToken, buyToken);
     if (realPrice.isValid) {
-        std::cout << "✓ Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
+        std::cout << "Real-time price: " << realPrice.price << " " << buyToken << " per " << sellToken 
                   << " (source: " << realPrice.source << ")" << std::endl;
         return realPrice.price;
     }

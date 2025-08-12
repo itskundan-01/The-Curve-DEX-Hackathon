@@ -164,6 +164,10 @@ PriceData PriceFetcher::fetchFrom1inch(const std::string& sellToken, const std::
 }
 
 PriceData PriceFetcher::fetchFromUniswapV3(const std::string& token0, const std::string& token1) {
+    // Suppress unused parameter warnings
+    (void)token0;
+    (void)token1;
+    
     // This would require GraphQL queries to Uniswap subgraph
     // For now, return invalid to fall back to other sources
     PriceData result;
@@ -177,6 +181,9 @@ PriceData PriceFetcher::fetchFromUniswapV3(const std::string& token0, const std:
 }
 
 PriceData PriceFetcher::fetchFromChainlink(const std::string& tokenPair) {
+    // Suppress unused parameter warning
+    (void)tokenPair;
+    
     // This would require actual Chainlink oracle calls
     PriceData result;
     result.isValid = false;
