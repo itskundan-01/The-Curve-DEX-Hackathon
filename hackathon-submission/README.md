@@ -38,6 +38,23 @@ sudo apt update && sudo apt install -y \
 brew install cmake curl nlohmann-json
 ```
 
+### Troubleshooting Dependencies
+
+If you encounter "nlohmann_json not found" error in online environments:
+
+```bash
+# Try installing via apt
+sudo apt install nlohmann-json3-dev
+
+# If that fails, manual installation:
+sudo mkdir -p /usr/local/include/nlohmann
+sudo wget -O /usr/local/include/nlohmann/json.hpp \
+    https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp
+
+# Then retry build
+cd build && rm -rf * && cmake .. && make
+```
+
 ### Compilation
 ```bash
 # Clone or navigate to project directory
